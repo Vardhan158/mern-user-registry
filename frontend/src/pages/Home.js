@@ -9,7 +9,7 @@ export default function Home() {
 
   const handleCheckStatus = async () => {
     try {
-      const res = await axios.get(`https://backend-c6uk.onrender.com/${employeeId}`);
+      const res = await axios.get(`https://backend-82bb.onrender.com/${employeeId}`);
       setStatus(res.data.status);
       setMessage('');
     } catch {
