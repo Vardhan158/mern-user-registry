@@ -22,7 +22,7 @@ const ExportButtons = ({ employeeId }) => {
         Export CSV
       </button>
       <button
-        onClick={() => window.open(`https://backend-c6uk.onrender.com/api/attendance/${employeeId}/export/pdf`, '_blank')}
+        onClick={() => window.open(`https://backend-82bb.onrender.com/api/attendance/${employeeId}/export/pdf`, '_blank')}
         style={{
           backgroundColor: '#dc2626',
           color: 'white',
@@ -50,7 +50,7 @@ export default function Dashboard() {
       return;
     }
     try {
-      const res = await axios.get(`https://backend-c6uk.onrender.com/api/attendance/${employeeId.trim()}`);
+      const res = await axios.get(`https://backend-82bb.onrender.com/api/attendance/${employeeId.trim()}`);
       setRecords(res.data);
       setMessage(res.data.length ? '' : 'No attendance records found');
     } catch (err) {
