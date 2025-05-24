@@ -9,7 +9,7 @@ export default function Home() {
 
   const handleCheckStatus = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/attendance/status/${employeeId}`);
+      const res = await axios.get(`https://backend-82bb.onrender.com/api/attendance/status/${employeeId}`);
       setStatus(res.data.status);
       setMessage('');
     } catch {
@@ -18,13 +18,13 @@ export default function Home() {
   };
 
   const handleCheckIn = async () => {
-    const res = await axios.post('http://localhost:5000/api/attendance/checkin', { employeeId });
+    const res = await axios.post('https://backend-82bb.onrender.com/api/attendance/checkin', { employeeId });
     setMessage(res.data.message);
     setStatus('checkedIn');
   };
 
   const handleCheckOut = async () => {
-    const res = await axios.post('http://localhost:5000/api/attendance/checkout', { employeeId });
+    const res = await axios.post('https://backend-82bb.onrender.com/api/attendance/checkout', { employeeId });
     setMessage(res.data.message);
     setStatus('checkedOut');
   };
