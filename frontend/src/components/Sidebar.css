@@ -1,0 +1,112 @@
+:root {
+  --sidebar-width: 220px;
+  --sidebar-bg: #2c3e50;
+  --sidebar-color: #ecf0f1;
+  --sidebar-hover-color: #1abc9c;
+  --hamburger-color: #2c3e50;
+  --hamburger-bg: #fff;
+  --overlay-bg: rgba(0, 0, 0, 0.3);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: calc(-1 * var(--sidebar-width));
+  width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-color);
+  padding: 1rem;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar h3 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  user-select: none;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar ul li {
+  margin: 1.2rem 0;
+  width: 100%;
+}
+
+.sidebar ul li a {
+  color: var(--sidebar-color);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a:focus {
+  color: var(--sidebar-hover-color);
+  background-color: rgba(26, 188, 156, 0.1);
+  outline: none;
+}
+
+/* Hamburger menu button */
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1100;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--hamburger-color);
+  background-color: var(--hamburger-bg);
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.hamburger:hover,
+.hamburger:focus {
+  background-color: #f0f0f0;
+  outline: none;
+}
+
+/* Overlay for when sidebar is open */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--overlay-bg);
+  z-index: 900;
+  transition: opacity 0.3s ease;
+}
+
+/* Responsive: automatically hide sidebar on narrow screens */
+@media (max-width: 768px) {
+  .sidebar {
+    left: calc(-1 * var(--sidebar-width));
+  }
+  .sidebar.open {
+    left: 0;
+  }
+}
