@@ -4,7 +4,7 @@ const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/employees')
+    fetch('https://backend-c6uk.onrender.com')
       .then(res => res.json())
       .then(data => setEmployees(data))
       .catch(err => console.error('Error:', err));
