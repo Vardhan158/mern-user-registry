@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import '../common.css'
+import '../common.css';
 
 export default function Home() {
   const [employeeId, setEmployeeId] = useState('');
@@ -18,15 +18,23 @@ export default function Home() {
   };
 
   const handleCheckIn = async () => {
-    const res = await axios.post('http://localhost:5000/api/attendance/checkin', { employeeId });
-    setMessage(res.data.message);
-    setStatus('checkedIn');
+    try {
+      const res = await axios.post('https://backend-c6uk.onrender.com/api/attendance/checkin', { employeeId });
+      setMessage(res.data.message);
+      setStatus('checkedIn');
+    } catch (err) {
+      setMessage('Check-in failed.');
+    }
   };
 
   const handleCheckOut = async () => {
-    const res = await axios.post('http://localhost:5000/api/attendance/checkout', { employeeId });
-    setMessage(res.data.message);
-    setStatus('checkedOut');
+    try {
+      const res = await axios.post('https://backend-c6uk.onrender.com/api/attendance/checkout', { employeeId });
+      setMessage(res.data.message);
+      setStatus('checkedOut');
+    } catch (err) {
+      setMessage('Check-out failed.');
+    }
   };
 
   return (
