@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import '../common.css'
+import '../common.css';
 
 export default function AddEmployee() {
   const [employeeId, setId] = useState('');
@@ -8,21 +8,43 @@ export default function AddEmployee() {
   const [message, setMessage] = useState('');
 
   const handleAdd = async () => {
+    if (!employeeId || !name) {
+      setMessage('Please enter both Employee ID and Name.');
+      return;
+    }
+
     try {
-      const res = await axios.post('https://backend-c6uk.onrender.com', { employeeId, name });
-      setMessage(res.data.message);
+      const res = await axios.post('https://backend-c6uk.onrender.com/employees', { employeeId, name });
+      setMessage(res.data.message || 'Employee added successfully');
+      setId('');
+      setName('');
     } catch (err) {
-      setMessage(err.response.data.message);
+      const errorMessage = err.response?.data?.message || 'Error adding employee';
+      setMessage(errorMessage);
     }
   };
 
   return (
-    <div>
+    <div className="add-employee-container">
       <h2>Add Employee</h2>
-      <input placeholder="Employee ID" value={employeeId} onChange={(e) => setId(e.target.value)} />
-      <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <button onClick={handleAdd}>Add</button>
-      {message && <p>{message}</p>}
+      <input
+        type="text"
+        placeholder="Employee ID"
+        value={employeeId}
+        onChange={(e) => setId(e.target.value)}
+        className="input-field"
+      />
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="input-field"
+      />
+      <button onClick={handleAdd} className="submit-button">
+        Add
+      </button>
+      {message && <p className="message">{message}</p>}
     </div>
   );
 }
