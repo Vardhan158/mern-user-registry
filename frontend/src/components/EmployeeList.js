@@ -6,7 +6,7 @@ const EmployeeList = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('https://backend-c6uk.onrender.com/employees') // Update to actual API path
+    fetch('https://backend-82bb.onrender.com/employees') // Update to actual API path
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch employees');
         return res.json();
