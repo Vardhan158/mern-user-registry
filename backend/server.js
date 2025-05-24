@@ -1,21 +1,25 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
 const { Parser } = require('json2csv');
 const PDFDocument = require('pdfkit');
 const Attendance = require('./models/Attendance');
 const Employee = require('./models/Employee');
 
+dotenv.config();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ✅ Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB Atlas'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// Add new employee
+// ✅ Add new employee
 app.post('/api/employees', async (req, res) => {
   const { employeeId, name } = req.body;
   const exists = await Employee.findOne({ employeeId });
@@ -26,13 +30,13 @@ app.post('/api/employees', async (req, res) => {
   res.json({ message: 'Employee added successfully.' });
 });
 
-// Get all employees
+// ✅ Get all employees
 app.get('/api/employees', async (req, res) => {
   const employees = await Employee.find().sort({ name: 1 });
   res.json(employees);
 });
 
-// Check attendance status
+// ✅ Check attendance status
 app.get('/api/attendance/status/:employeeId', async (req, res) => {
   const { employeeId } = req.params;
   const emp = await Employee.findOne({ employeeId });
@@ -46,7 +50,7 @@ app.get('/api/attendance/status/:employeeId', async (req, res) => {
   return res.json({ status: 'checkedOut' });
 });
 
-// Check-in
+// ✅ Check-in
 app.post('/api/attendance/checkin', async (req, res) => {
   const { employeeId } = req.body;
   const emp = await Employee.findOne({ employeeId });
@@ -70,7 +74,7 @@ app.post('/api/attendance/checkin', async (req, res) => {
   res.json({ message: isExact10AM ? 'Checked in on time (10 AM).' : 'Checked in, but late.' });
 });
 
-// Check-out
+// ✅ Check-out
 app.post('/api/attendance/checkout', async (req, res) => {
   const { employeeId } = req.body;
   const emp = await Employee.findOne({ employeeId });
@@ -101,7 +105,7 @@ app.post('/api/attendance/checkout', async (req, res) => {
   res.json({ message: msg });
 });
 
-// Attendance history
+// ✅ Attendance history
 app.get('/api/attendance/:employeeId', async (req, res) => {
   const { employeeId } = req.params;
   const emp = await Employee.findOne({ employeeId });
@@ -111,7 +115,7 @@ app.get('/api/attendance/:employeeId', async (req, res) => {
   res.json(records);
 });
 
-// Export as CSV
+// ✅ Export as CSV
 app.get('/api/attendance/:employeeId/export/csv', async (req, res) => {
   const records = await Attendance.find({ employeeId: req.params.employeeId });
   if (!records.length) return res.status(404).send('No records found.');
@@ -125,7 +129,7 @@ app.get('/api/attendance/:employeeId/export/csv', async (req, res) => {
   return res.send(csv);
 });
 
-// Export as PDF
+// ✅ Export as PDF
 app.get('/api/attendance/:employeeId/export/pdf', async (req, res) => {
   const records = await Attendance.find({ employeeId: req.params.employeeId });
   if (!records.length) return res.status(404).send('No records found.');
@@ -148,4 +152,14 @@ app.get('/api/attendance/:employeeId/export/pdf', async (req, res) => {
   doc.end();
 });
 
-app.listen(5000, () => console.log('✅ Server running on port 5000'));
+// ✅ Serve React frontend
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// ✅ Catch-all to support SPA routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+// ✅ Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
