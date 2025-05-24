@@ -14,6 +14,7 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB Atlas'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
+
 // Add new employee
 app.post('/api/employees', async (req, res) => {
   const { employeeId, name } = req.body;
