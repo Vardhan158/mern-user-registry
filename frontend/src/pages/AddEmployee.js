@@ -14,7 +14,7 @@ export default function AddEmployee() {
     }
 
     try {
-      const res = await axios.post('https://backend-c6uk.onrender.com/employees', { employeeId, name });
+      const res = await axios.post('https://backend-82bb.onrender.com/employees', { employeeId, name });
       setMessage(res.data.message || 'Employee added successfully');
       setId('');
       setName('');
