@@ -1,36 +1,25 @@
 import { useState } from 'react';
 import axios from 'axios';
-import '../common.css'
+import '../common.css';
 
 const ExportButtons = ({ employeeId }) => {
   if (!employeeId) return null;
 
   return (
-    <div style={{ marginTop: 16 }}>
+    <div className="export-buttons">
       <button
-        onClick={() => window.open(`https://backend-82bb.onrender.com/api/attendance/${employeeId}/export/csv`, '_blank')}
-        style={{
-          backgroundColor: '#2563eb',
-          color: 'white',
-          padding: '8px 16px',
-          borderRadius: 4,
-          marginRight: 8,
-          border: 'none',
-          cursor: 'pointer'
-        }}
+        className="export-button csv"
+        onClick={() =>
+          window.open(`http://localhost:5000/api/attendance/${employeeId}/export/csv`, '_blank')
+        }
       >
         Export CSV
       </button>
       <button
-        onClick={() => window.open(`https://backend-82bb.onrender.com/api/attendance/${employeeId}/export/pdf`, '_blank')}
-        style={{
-          backgroundColor: '#dc2626',
-          color: 'white',
-          padding: '8px 16px',
-          borderRadius: 4,
-          border: 'none',
-          cursor: 'pointer'
-        }}
+        className="export-button pdf"
+        onClick={() =>
+          window.open(`http://localhost:5000/api/attendance/${employeeId}/export/pdf`, '_blank')
+        }
       >
         Export PDF
       </button>
@@ -50,7 +39,7 @@ export default function Dashboard() {
       return;
     }
     try {
-      const res = await axios.get(`https://backend-82bb.onrender.com/api/attendance/${employeeId.trim()}`);
+      const res = await axios.get(`http://localhost:5000/api/attendance/${employeeId.trim()}`);
       setRecords(res.data);
       setMessage(res.data.length ? '' : 'No attendance records found');
     } catch (err) {
@@ -60,29 +49,27 @@ export default function Dashboard() {
   };
 
   return (
-    <div style={{ maxWidth: 700, margin: 'auto', padding: 20 }}>
-      <h2>Dashboard</h2>
-      <input
-        type="text"
-        placeholder="Enter Employee ID"
-        value={employeeId}
-        onChange={(e) => setEmployeeId(e.target.value)}
-        style={{ padding: 8, width: '60%', marginRight: 10 }}
-      />
-      <button onClick={fetchAttendance} disabled={!employeeId.trim()}>
-        View Records
-      </button>
+    <div className="dashboard-container">
+      <h2 className="title">Dashboard</h2>
+      <div className="input-group">
+        <input
+          type="text"
+          placeholder="Enter Employee ID"
+          value={employeeId}
+          onChange={(e) => setEmployeeId(e.target.value)}
+          className="input-field"
+        />
+        <button className="submit-button" onClick={fetchAttendance} disabled={!employeeId.trim()}>
+          View Records
+        </button>
+      </div>
 
-      {message && <p style={{ marginTop: 20, color: 'red' }}>{message}</p>}
+      {message && <p className="error-message">{message}</p>}
 
       {records.length > 0 && (
         <>
-          <table
-            border="1"
-            cellPadding="10"
-            style={{ marginTop: 20, width: '100%', borderCollapse: 'collapse' }}
-          >
-            <thead style={{ backgroundColor: '#f0f0f0' }}>
+          <table className="attendance-table">
+            <thead>
               <tr>
                 <th>Date</th>
                 <th>Check In</th>
