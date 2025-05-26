@@ -10,7 +10,7 @@ const ExportButtons = ({ employeeId }) => {
       <button
         className="export-button csv"
         onClick={() =>
-          window.open(`http://localhost:5000/api/attendance/${employeeId}/export/csv`, '_blank')
+          window.open(`https://backend-82bb.onrender.com/api/attendance/${employeeId}/export/csv`, '_blank')
         }
       >
         Export CSV
@@ -18,7 +18,7 @@ const ExportButtons = ({ employeeId }) => {
       <button
         className="export-button pdf"
         onClick={() =>
-          window.open(`http://localhost:5000/api/attendance/${employeeId}/export/pdf`, '_blank')
+          window.open(`https://backend-82bb.onrender.com/api/attendance/${employeeId}/export/pdf`, '_blank')
         }
       >
         Export PDF
@@ -39,7 +39,7 @@ export default function Dashboard() {
       return;
     }
     try {
-      const res = await axios.get(`http://localhost:5000/api/attendance/${employeeId.trim()}`);
+      const res = await axios.get(`https://backend-82bb.onrender.com/api/attendance/${employeeId.trim()}`);
       setRecords(res.data);
       setMessage(res.data.length ? '' : 'No attendance records found');
     } catch (err) {
